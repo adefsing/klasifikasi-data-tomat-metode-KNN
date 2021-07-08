@@ -236,7 +236,7 @@ class Data_uji extends Admin_Controller
             for ($j = 0; $j < count($data_testing); $j++) {
                 $dist['distance'] = $this->distance($data_uji[$i], $data_testing[$j]);
                 $dist['jenis'] = $data_testing[$j]['jenis'];
-                $dist['id_uji'] = $data_testing[$j]['id_uji'];
+                $dist['id_uji'] = $data_testing[$j]['id_latih'];
 
                 array_push($DISTANCES, $dist);
             }
@@ -265,7 +265,6 @@ class Data_uji extends Admin_Controller
 
         $data["K_VALUE"] = $K_VALUE;
         $data["NEIGHBOURS"] = $NEIGHBOUR;
-
         $data["distances"] = $DISTANCES;
         //ubah ke array object
         foreach ($data["distances"]  as  $ind => $val) {
@@ -312,7 +311,7 @@ class Data_uji extends Admin_Controller
             for ($j = 0; $j < count($data_testing); $j++) {
                 $dist['distances'] = $this->distance($data_uji[$i], $data_testing[$j]);
                 $dist['jenis'] = $data_testing[$j]['jenis'];
-                $dist['id_uji'] = $data_testing[$j]['id_uji'];
+                $dist['id_uji'] = $data_testing[$j]['id_latih'];
                 // echo json_encode( $dist ).'<br>' ;
 
                 array_push($DISTANCES, $dist);
@@ -390,7 +389,7 @@ class Data_uji extends Admin_Controller
             for ($j = 0; $j < count($data_testing); $j++) {
                 $dist['distances'] = $this->distance($data_uji[$i], $data_testing[$j]);
                 $dist['jenis'] = $data_testing[$j]['jenis'];
-                $dist['id_uji'] = $data_testing[$j]['id_uji'];
+                $dist['id_uji'] = $data_testing[$j]['id_latih'];
                 // echo json_encode( $dist ).'<br>' ;
 
                 array_push($DISTANCES, $dist);

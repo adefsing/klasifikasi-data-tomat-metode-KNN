@@ -267,7 +267,15 @@
                                     </td>
                                     <!-- ($file->data_label == 1) ? "LULUS" : (($file->data_label == 0) ? "TIDAK LULUS" : "BELUM DI UJI") -->
                                     <td>
-                                        <?php echo $file->jenis  ?>
+                                        <?php
+                                        if ($file->jenis == 0) {
+                                            echo "Busuk";
+                                        } elseif ($file->jenis == 1) {
+                                            echo "Retak";
+                                        } else {
+                                            echo "Spek";
+                                        }
+                                        ?>
                                     </td>
                                     <td>
                                         <?php echo ($file->tetangga_terdekat)  ?>

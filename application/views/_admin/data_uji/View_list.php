@@ -45,7 +45,7 @@
                         <thead class="thin-border-bottom">
                             <tr>
                                 <th style="width:50px">No</th>
-                                <th>id_uji</th>
+                                <!-- <th>id_uji</th> -->
                                 <th>area</th>
                                 <th>perimeter</th>
                                 <!-- <th style="background-color:green" >Gaji Orang Tua</th> -->
@@ -66,9 +66,9 @@
                                     <td>
                                         <?php echo $no ?>
                                     </td>
-                                    <td>
+                                    <!-- <td>
                                         <?php echo $file->id_uji  ?>
-                                    </td>
+                                    </td> -->
                                     <td>
                                         <?php echo $file->area ?>
                                     </td>
@@ -115,7 +115,7 @@
                         <thead class="thin-border-bottom">
                             <tr>
                                 <th style="width:50px">No</th>
-                                <th>id_uji</th>
+                                <!-- <th>id_uji</th> -->
                                 <th>area</th>
                                 <th>perimeter</th>
                                 <!-- <th style="background-color:green" >Gaji Orang Tua</th> -->
@@ -137,9 +137,9 @@
                                     <td>
                                         <?php echo $no ?>
                                     </td>
-                                    <td>
+                                    <!-- <td>
                                         <?php echo $file->id_uji  ?>
-                                    </td>
+                                    </td> -->
                                     <td>
                                         <?php echo $file->area ?>
                                     </td>
@@ -163,7 +163,15 @@
                                     </td>
                                     <td>
                                         <!-- $file->data_label == 1) ? "LULUS" : (($file->data_label == 0) ? "TIDAK LULUS" : "BELUM DI UJI") -->
-                                        <?php echo $file->jenis  ?>
+                                        <?php
+                                        if ($file->jenis == 0) {
+                                            echo "Busuk";
+                                        } elseif ($file->jenis == 1) {
+                                            echo "Retak";
+                                        } else {
+                                            echo "Spek";
+                                        }
+                                        ?>
                                     </td>
                                     <td>
                                         <!-- <a href="<?php echo site_url('admin/data_uji/uji/') . $file->id_uji; ?>" class="btn btn-sm btn-success">Uji</a> -->
