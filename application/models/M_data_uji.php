@@ -39,12 +39,11 @@ class M_data_uji extends CI_Model
     public function read($id_uji = -1)
     {
         $sql = "
-            SELECT a.*, b.* from data_uji a
-            left join user_profile b on b.user_id = a.user_id
+            SELECT * from data_uji 
         ";
         if ($id_uji != -1) {
             $sql .= "
-                where a.id_uji = '$id_uji'
+                where id_uji = '$id_uji'
             ";
         }
         return $query = $this->db->query($sql)->result();

@@ -49,7 +49,7 @@
             <thead class="thin-border-bottom">
               <tr>
                 <th style="width:50px">No</th>
-                <th>id_latih</th>
+                <!-- <th>id_latih</th> -->
                 <th>area</th>
                 <th>perimeter</th>
 
@@ -72,9 +72,9 @@
                   <td>
                     <?php echo $no ?>
                   </td>
-                  <td>
+                  <!-- <td>
                     <?php echo $file->id_latih  ?>
-                  </td>
+                  </td> -->
                   <td>
                     <?php echo $file->area ?>
                   </td>
@@ -98,7 +98,16 @@
                   </td>
                   <td>
                     <!-- $file->data_label == 1) ? "LULUS" : (($file->data_label == 0) ? "TIDAK LULUS" : "BELUM DI UJI") -->
-                    <?php echo $file->jenis  ?>
+                    <!-- ($file->jenis == 1) ? "Retak" : (($file->jenis == 0) ? "Busuk" : (($file->jenis == 2) ? "Spek" : "BELUM DI UJI")) -->
+                    <?php
+                    if ($file->jenis == 0) {
+                      echo "Busuk";
+                    } elseif ($file->jenis == 1) {
+                      echo "Retak";
+                    } else {
+                      echo "Spek";
+                    }
+                    ?>
                   </td>
                   <td>
                     <a href="<?php echo site_url('admin/data_testing/edit/') . $file->id_latih; ?>" class="btn-sm btn-primary">Edit</a>
@@ -130,7 +139,7 @@
             <thead class="thin-border-bottom">
               <tr>
                 <th style="width:50px">No</th>
-                <th>id_latih</th>
+                <!-- <th>id_latih</th> -->
                 <th>area</th>
                 <th>perimeter</th>
                 <!-- <th style="background-color:green" >Gaji Orang Tua</th> -->
@@ -140,7 +149,7 @@
                 <th>G90_kontras</th>
                 <th>G135_kontras</th>
                 <th>Jenis</th>
-                <th>Label</th>
+                <!-- <th>Label</th> -->
               </tr>
             </thead>
             <tbody>
@@ -152,9 +161,9 @@
                   <td>
                     <?php echo $no ?>
                   </td>
-                  <td>
-                    <?php echo $file->id_uji  ?>
-                  </td>
+                  <!-- <td>
+                    <?php echo $file->id_latih  ?>
+                  </td> -->
                   <td>
                     <?php echo $file->area ?>
                   </td>
@@ -178,7 +187,15 @@
                   </td>
                   <td>
                     <!-- $file->data_label == 1) ? "LULUS" : (($file->data_label == 0) ? "TIDAK LULUS" : "BELUM DI UJI") -->
-                    <?php echo $file->jenis  ?>
+                    <?php
+                    if ($file->jenis == 0) {
+                      echo "Busuk";
+                    } elseif ($file->jenis == 1) {
+                      echo "Retak";
+                    } else {
+                      echo "Spek";
+                    }
+                    ?>
                   </td>
                 </tr>
               <?php

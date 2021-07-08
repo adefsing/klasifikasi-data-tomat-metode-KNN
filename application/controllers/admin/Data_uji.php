@@ -91,30 +91,31 @@ class Data_uji extends Admin_Controller
                 // Artinya karena baris pertama adalah nama-nama kolom
                 // Jadi dilewat saja, tidak usah diimport
                 if ($numrow > 1 &&  !empty($row['A'])) {
-                    // $data_uji["id_uji"] = $row['A'] ;
-                    $data_uji["area"] = $row['B'];
-                    $data_uji["perimeter"] = $row['C'];
-                    $data_uji["bentuk"] = $row['D'];
-                    $data_uji["G0_kontras"] = $row['E'];
-                    $data_uji["G45_kontras"] = $row['F'];
-                    $data_uji["G90_kontras"] = $row['G'];
-                    $data_uji["G135_kontras"] = $row['H'];
-                    $data_uji["jenis"] = ['A'];
+                    $data_uji["id_uji"] = $row['A'];
+                    $data_uji["jenis"] = $row['B'];
+                    $data_uji["area"] = $row['C'];
+                    $data_uji["perimeter"] = $row['D'];
+                    $data_uji["bentuk"] = $row['E'];
+                    $data_uji["G0_kontras"] = $row['F'];
+                    $data_uji["G45_kontras"] = $row['G'];
+                    $data_uji["G90_kontras"] = $row['H'];
+                    $data_uji["G135_kontras"] = $row['I'];
+
                     ##########################################################
-                    $data_profile["user_profile_fullname"] = $row['A'];
-                    $data_profile["user_profile_address"] = $row['G'];
-                    $data_profile["user_profile_email"] = $row['H'];
-                    $data_profile["user_profile_phone"] = $row['I'];
-                    //add user
-                    $identitas = time();
-                    $data_user['user_username'] = $identitas + $numrow;
-                    $data_user['user_password'] = md5($identitas);
-                    $result = $this->m_register->register($data_user, $data_profile);
-                    if ($result['status']) {
-                        $data_uji["user_id"] = $result['message']['user_id'];
-                        // Kita push (add) array data ke variabel data
-                        array_push($__data_uji, $data_uji);
-                    }
+                    // $data_profile["user_profile_fullname"] = $row['A'];
+                    // $data_profile["user_profile_address"] = $row['G'];
+                    // $data_profile["user_profile_email"] = $row['H'];
+                    // $data_profile["user_profile_phone"] = $row['I'];
+                    // //add user
+                    // $identitas = time();
+                    // $data_user['user_username'] = $identitas + $numrow;
+                    // $data_user['user_password'] = md5($identitas);
+                    // $result = $this->m_register->register($data_user, $data_profile);
+                    // if ($result['status']) {
+                    // $data_uji["jenis"] = $result['message']['user_id'];
+                    // Kita push (add) array data ke variabel data
+                    array_push($__data_uji, $data_uji);
+                    // }
                 }
 
                 $numrow++; // Tambah 1 setiap kali looping

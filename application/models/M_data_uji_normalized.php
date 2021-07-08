@@ -16,12 +16,11 @@ class M_data_uji_normalized extends CI_Model
     public function read($id_uji = -1, $mode = "object")
     {
         $sql = "
-            SELECT a.*, b.user_profile_fullname from data_uji_normalized a
-            left join user_profile b on b.user_id = a.user_id
+            SELECT * from data_uji_normalized
         ";
         if ($id_uji != -1) {
             $sql .= "
-                where a.id_uji = '$id_uji'
+                where id_uji = '$id_uji'
             ";
         }
         if ($mode == "array")
@@ -33,19 +32,19 @@ class M_data_uji_normalized extends CI_Model
     public function rangking($id_uji = -1, $mode = "object", $quota = NULL)
     {
         $sql = "
-            SELECT a.*, b.user_profile_fullname from data_uji_normalized a
-            left join user_profile b on b.user_id = a.user_id
+            SELECT * from data_uji_normalized a
+            
         ";
         if ($id_uji != -1) {
             $sql .= "
-                where a.id_uji = '$id_uji'
-                AND a.jenis != 0
+                where id_uji = '$id_uji'
+                AND jenis != 0
             ";
         }
         $sql .= "
             ORDER BY
-            a.jenis DESC,
-            a.tetangga_terdekat ASC
+            jenis DESC,
+            tetangga_terdekat ASC
            
         ";
 
