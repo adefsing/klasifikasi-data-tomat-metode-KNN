@@ -92,14 +92,14 @@ class Data_uji extends Admin_Controller
                 // Jadi dilewat saja, tidak usah diimport
                 if ($numrow > 1 &&  !empty($row['A'])) {
                     $data_uji["id_uji"] = $row['A'];
-                    $data_uji["jenis"] = $row['B'];
-                    $data_uji["area"] = $row['C'];
-                    $data_uji["perimeter"] = $row['D'];
-                    $data_uji["bentuk"] = $row['E'];
-                    $data_uji["G0_kontras"] = $row['F'];
-                    $data_uji["G45_kontras"] = $row['G'];
-                    $data_uji["G90_kontras"] = $row['H'];
-                    $data_uji["G135_kontras"] = $row['I'];
+                    $data_uji["jenis"] = -1;
+                    $data_uji["area"] = $row['B'];
+                    $data_uji["perimeter"] = $row['C'];
+                    $data_uji["bentuk"] = $row['D'];
+                    $data_uji["G0_kontras"] = $row['E'];
+                    $data_uji["G45_kontras"] = $row['F'];
+                    $data_uji["G90_kontras"] = $row['G'];
+                    $data_uji["G135_kontras"] = $row['H'];
 
                     ##########################################################
                     // $data_profile["user_profile_fullname"] = $row['A'];
@@ -263,12 +263,12 @@ class Data_uji extends Admin_Controller
             $data_uji[$i]['jenis'] = $terbesar[0]['jenis']; //update nilai label (lulus / tidak lulus)
         }
 
+
         $data["K_VALUE"] = $K_VALUE;
         $data["NEIGHBOURS"] = $NEIGHBOUR;
         $data["distances"] = $DISTANCES;
         //ubah ke array object
         foreach ($data["distances"]  as  $ind => $val) {
-            $data["distances"][$ind] = (object) $data["distances"][$ind];
         }
         $data["data_uji"] = $data_uji;
         //ubah ke array object
@@ -332,6 +332,9 @@ class Data_uji extends Admin_Controller
 
 
             $terbesar =  array();
+
+
+
             foreach (array_keys($NEIGHBOUR) as $paramName) {
 
                 if (count($NEIGHBOUR[$paramName])  > count($terbesar)) {
@@ -414,17 +417,17 @@ class Data_uji extends Admin_Controller
                     $terbesar = $NEIGHBOUR[$paramName];
                 }
             }
-            $lulus = ($NEIGHBOUR[1])  ? count($NEIGHBOUR[1])  : 0;
+            // $lulus = ($NEIGHBOUR[1])  ? count($NEIGHBOUR[1])  : 0;
             $sum = 0;
             $count = count($NEIGHBOUR[1]);
+
             foreach ($NEIGHBOUR[1] as $_length) {
                 $sum += $_length['distances'];
             }
+
             $avrg = $sum / $count; // perhitungan nilai jarak rata-rata
-
-
             $data_uji[$i]['jenis']        = $terbesar[0]['jenis']; //update nilai label (lulus / tidak lulus)
-            $data_uji[$i]['tetangga_terdekat'] =  $avrg;
+            $data_uji[$i]['tetangga_terdekat'] = $avrg;
             $data_uji[$i]['K_VALUE']           = $K_VALUE;
             $data_uji[$i]['distances']         = $DISTANCES;
             $data_uji[$i]['NEIGHBOURS']        = $NEIGHBOUR;
@@ -436,7 +439,7 @@ class Data_uji extends Admin_Controller
         $data['data_uji'] = $data_uji;
 
         $data['files']  = $this->m_data_uji_normalized->rangking();
-        $data['data_uji'] = $data_uji;
+        // $data['data_uji'] = $data_uji;
         $data['page_name'] = "Hasil Data Uji";
         $this->load->view("_admin/_template/header");
         $this->load->view("_admin/_template/sidebar_menu");
@@ -448,7 +451,8 @@ class Data_uji extends Admin_Controller
     private function distance($data_uji, $data_testing)
     {
         $attrs = array(
-            'perimeter', 'area', 'bentuk', 'G0_kontras', 'G45_kontras'
+            'area', 'perimeter', 'bentuk', 'G0_kontras',
+            'G45_kontras', 'G90_kontras', 'G135_kontras'
         );
         $value = 0;
         foreach ($attrs as $attr) {

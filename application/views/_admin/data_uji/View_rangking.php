@@ -94,7 +94,17 @@
                   </td>
                   <td>
                     <!-- $file->data_label == 1) ? "LULUS" : (($file->data_label == 0) ? "TIDAK LULUS" : "BELUM DI UJI") -->
-                    <?php echo $file->jenis  ?>
+                    <?php
+                    if ($file->jenis == 0) {
+                      echo "Busuk";
+                    } elseif ($file->jenis == 1) {
+                      echo "Retak";
+                    } elseif ($file->jenis == 2) {
+                      echo "Spek";
+                    } else {
+                      echo "BELUM DIUJI";
+                    }
+                    ?>
                   </td>
                   <td>
                     <?php echo ($file->tetangga_terdekat)  ?>

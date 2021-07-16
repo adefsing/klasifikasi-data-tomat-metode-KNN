@@ -60,21 +60,23 @@
                                         <?php echo $no ?>
                                     </td>
                                     <td>
-                                        <?php echo $file->id_uji  ?>
+                                        <?php echo $file['id_uji']  ?>
                                     </td>
                                     <td>
-                                        <?php echo $file->distance ?>
+                                        <?php echo $file['distance'] ?>
                                     </td>
                                     <td>
 
                                         <!-- ( $file->data_label == 1 )? "LULUS" : ( ( $file->data_label == 0 )? "TIDAK LULUS" : "BELUM DI UJI"   ) -->
                                         <?php
-                                        if ($file->jenis == 0) {
+                                        if ($file['jenis'] == 0) {
                                             echo "Busuk";
-                                        } elseif ($file->jenis == 1) {
+                                        } elseif ($file['jenis'] == 1) {
                                             echo "Retak";
-                                        } else {
+                                        } elseif ($file['jenis'] == 2) {
                                             echo "Spek";
+                                        } else {
+                                            echo "BELUM DIUJI";
                                         }
                                         ?>
                                     </td>
@@ -128,8 +130,10 @@
                                                 echo "Busuk";
                                             } elseif ($file->jenis == 1) {
                                                 echo "Retak";
-                                            } else {
+                                            } elseif ($file->jenis == 2) {
                                                 echo "Spek";
+                                            } else {
+                                                echo "BELUM DIUJI";
                                             }
                                             ?>
                                         </td>
@@ -210,8 +214,10 @@
                                             echo "Busuk";
                                         } elseif ($file->jenis == 1) {
                                             echo "Retak";
-                                        } else {
+                                        } elseif ($file->jenis == 2) {
                                             echo "Spek";
+                                        } else {
+                                            echo "BELUM DIUJI";
                                         }
                                         ?>
                                     </td>

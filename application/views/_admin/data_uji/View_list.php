@@ -168,8 +168,10 @@
                                             echo "Busuk";
                                         } elseif ($file->jenis == 1) {
                                             echo "Retak";
-                                        } else {
+                                        } elseif ($file->jenis == 2) {
                                             echo "Spek";
+                                        } else {
+                                            echo "BELUM DIUJI";
                                         }
                                         ?>
                                     </td>
