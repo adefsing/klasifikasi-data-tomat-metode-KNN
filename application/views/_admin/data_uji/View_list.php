@@ -34,6 +34,15 @@
     <!-- alert  -->
     <!-- Main content -->
     <section class="content">
+    <div class="box">
+            <div class="box-header">
+                <a href="<?php echo site_url('landing/add_biodata'); ?>" class="btn-sm btn-primary">Tambah Data</a>
+                <a href="<?php echo site_url('admin/data_uji/import'); ?>" class="btn-sm btn-success">Import Data Uji</a>
+                <a href="<?php echo site_url('admin/data_uji/hapus'); ?>" class="btn-sm btn-danger">Kosongkan Data</a>
+            </div>
+            <!-- /.box-header -->
+
+        </div>
         <div class="box">
             <div class="box-header">
                 <h3 class="box-title"><?php echo $page_name ?></h3>

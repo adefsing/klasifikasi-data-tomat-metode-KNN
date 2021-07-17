@@ -80,4 +80,9 @@ class M_data_uji extends CI_Model
     {
         return $this->db->count_all("data_uji");
     }
+
+    function hapus_data(){
+        $this->db->empty_table('data_uji');
+        $this->db->empty_table('data_uji_normalized');
+    }
 }

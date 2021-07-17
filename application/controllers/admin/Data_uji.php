@@ -447,6 +447,11 @@ class Data_uji extends Admin_Controller
         $this->load->view("_admin/_template/footer");
     }
 
+    function hapus(){
+		$this->m_data_uji->hapus_data();
+		redirect(site_url('admin/data_uji'));
+	}
+    
     //   fungsi untuk menghitung jarak
     private function distance($data_uji, $data_testing)
     {
@@ -460,4 +465,8 @@ class Data_uji extends Admin_Controller
         }
         return round(sqrt($value), 6);
     }
+
+
+
+
 }
