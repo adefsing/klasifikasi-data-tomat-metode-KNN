@@ -40,6 +40,51 @@ class Data_testing extends Admin_Controller
         $this->load->view("_admin/data_testing/View_list", $data);
         $this->load->view("_admin/_template/footer");
     }
+    
+    public function editlatih($id_latih)
+    {
+        $where = array('id_latih' => $id_latih);
+        $data['latihedit'] = $this->m_data_latih->edit_latih($where, 'data_latih')->result();
+        $data['page_name'] = "Edit Data Testing";
+        
+              $this->load->view("_admin/_template/header");
+              $this->load->view("_admin/_template/sidebar_menu");
+                  $this->load->view("_admin/data_testing/View_edit",$data);
+              $this->load->view("_admin/_template/footer"); 
+    }
+  
+  
+    public function updatelatih()
+    {
+        $id_latih = $this->input->post('id_latih');
+        $jenis = $this->input->post('jenis');
+        $area = $this->input->post('area');
+        $perimeter = $this->input->post('perimeter');
+        $bentuk = $this->input->post('bentuk');
+        $G0_kontras = $this->input->post('G0_kontras');
+        $G45_kontras = $this->input->post('G45_kontras');
+        $G90_kontras = $this->input->post('G90_kontras');
+        $G135_kontras = $this->input->post('G135_kontras');
+        
+        $where = array('id_latih' => $id_latih);
+        
+  
+        $data = array(
+            'id_latih' => $id_latih,
+            'jenis' => $jenis,
+            'area' => $area,
+            'perimeter' => $perimeter,
+            'bentuk' => $bentuk,
+            'G0_kontras' => $G0_kontras,
+            'G45_kontras' => $G45_kontras,
+            'G90_kontras' => $G90_kontras,
+            'G135_kontras' => $G135_kontras,
+        );
+  
+  
+        $this->m_data_latih->update_data($where, $data);
+        redirect('admin/data_testing');
+    }
 
     public function create()
     {
