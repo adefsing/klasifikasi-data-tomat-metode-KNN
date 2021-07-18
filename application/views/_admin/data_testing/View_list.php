@@ -110,7 +110,7 @@
                     ?>
                   </td>
                   <td>
-                    <a href="<?php echo site_url('admin/data_testing/edit/') . $file->id_latih; ?>" class="btn-sm btn-primary">Edit</a>
+                    <a href="<?php echo site_url('admin/data_testing/editlatih/') . $file->id_latih; ?>" class="btn-sm btn-primary">Edit</a>
                     <a href="<?php echo site_url('admin/data_testing/delete/') . $file->id_latih; ?>" class="btn-sm btn-danger">Hapus</a>
                   </td>
 
