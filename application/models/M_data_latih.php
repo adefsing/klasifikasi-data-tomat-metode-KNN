@@ -25,6 +25,18 @@ class M_data_latih extends CI_Model
         }
         return $query = $this->db->query($sql)->result();
     }
+
+    function edit_latih($where,$table){    
+        return $this->db->get_where($table,$where);
+        }
+
+        function update_data($where,$data){
+            $this->db->where($where);
+            $this->db->update('data_latih',$data);
+        
+        
+          } 
+          
     public function update($data_latih, $data_latih_param)
     {
         return  $this->db->update('data_latih', $data_latih, $data_latih_param);
