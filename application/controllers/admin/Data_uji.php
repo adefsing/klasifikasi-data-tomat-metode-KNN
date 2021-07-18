@@ -59,6 +59,70 @@ class Data_uji extends Admin_Controller
         $this->load->view("_admin/data_uji/View_rangking", $data);
         $this->load->view("_admin/_template/footer");
     }
+
+    public function create()
+    {
+        $data['page_name'] = "Tambah Data Uji";
+        $inpust =  ($this->input->post('area[]') == null) ? array() : $this->input->post('area[]');
+        // echo var_dump( $inpust );
+        foreach ($inpust as $ind => $val) {
+            if (!empty($this->input->post('area')[$ind])) {
+                $this->form_validation->set_rules('area[' . $ind . ']', 'area', 'trim|required');
+                $this->form_validation->set_rules('perimeter[' . $ind . ']', 'perimeter', 'trim|required');
+                $this->form_validation->set_rules('bentuk[' . $ind . ']', 'bentuk', 'trim|required');
+                $this->form_validation->set_rules('G0_kontras[' . $ind . ']', 'G0_kontras', 'trim|required');
+                $this->form_validation->set_rules('G45_kontras[' . $ind . ']', 'G45_kontras', 'trim|required');
+                $this->form_validation->set_rules('G90_kontras[' . $ind . ']', 'G90_kontras', 'trim|required');
+                $this->form_validation->set_rules('G135_kontras[' . $ind . ']', 'G135_kontras', 'trim|required');
+                $this->form_validation->set_rules('jenis[' . $ind . ']', 'jenis', 'trim|required');
+            }
+        }
+
+
+
+        if ($this->form_validation->run() == true) {
+            $data_uji = array();
+            $inpust =  ($this->input->post('area[]') == null) ? array() : $this->input->post('area[]');
+            foreach ($inpust as $ind => $val) {
+                $data = array();
+                if (!empty($this->input->post('area')[$ind])) {
+                    $data_test["area"] = $this->input->post('area')[$ind];
+                    $data_test["perimeter"] = $this->input->post('perimeter')[$ind];
+                    $data_test["bentuk"] = $this->input->post('bentuk')[$ind];
+                    $data_test["G0_kontras"] = $this->input->post('G0_kontras')[$ind];
+                    $data_test["G45_kontras"] = $this->input->post('G45_kontras')[$ind];
+                    $data_test["G90_kontras"] = $this->input->post('G90_kontras')[$ind];
+                    $data_test["G135_kontras"] = $this->input->post('G135_kontras')[$ind];
+                    $data_test["jenis"] = $this->input->post('jenis')[$ind];
+
+                    array_push($data_uji, $data_test);
+                }
+            }
+
+            // echo var_dump( $data_testing );
+            if ($this->m_data_uji->create($data_uji)) {
+                $this->session->set_flashdata('info', array(
+                    'from' => 1,
+                    'message' =>  'item berhasil ditambah'
+                ));
+                redirect(site_url('admin/data_uji'));
+                return;
+            }
+            $this->session->set_flashdata('info', array(
+                'from' => 0,
+                'message' =>  'terjadi kesalahan saat mengirim data'
+            ));
+            redirect(site_url('admin/data_uji'));
+        } else {
+            $data['files'] = $this->m_data_uji->read();
+            $data['user'] = $this->m_user->getUser($this->session->userdata('user_id'));
+            $this->load->view("_admin/_template/header");
+            $this->load->view("_admin/_template/sidebar_menu");
+            $this->load->view("_admin/data_uji/View_create", $data);
+            $this->load->view("_admin/_template/footer");
+        }
+    }
+
     public function import()
     {
         $data['page_name'] = "import Data Peserta";
@@ -451,7 +515,7 @@ class Data_uji extends Admin_Controller
 		$this->m_data_uji->hapus_data();
 		redirect(site_url('admin/data_uji'));
 	}
-    
+
     //   fungsi untuk menghitung jarak
     private function distance($data_uji, $data_testing)
     {

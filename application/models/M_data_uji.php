@@ -9,12 +9,11 @@ class M_data_uji extends CI_Model
         parent::__construct();
         $this->load->database();
     }
+
     public function create($data_uji)
     {
         return $this->db->insert_batch('data_uji', $data_uji);
-        // $data_uji = $this->_filter_data( 'data_uji' , $data_uji);
-
-        // return $this->db->insert('data_uji', $data_uji);
+        
     }
 
     /**

@@ -71,22 +71,13 @@
                                         <span style="color:red"><?php echo form_error('G135_kontras[' . $ind . ']'); ?></span>
                                     </div>
                                 </div>
-                                <!-- <div class="col-xs-3">
+                                <div class="col-xs-3">
                                     <div class="form-group has-feedback">
-                                        <input type="number" step="any" class="form-control" placeholder="Jenis" name="jenis[<?php echo $ind ?>]" value="1" />
+                                        <input type="hidden" step="any" class="form-control" placeholder="Jenis" name="jenis[<?php echo $ind ?>]" value="-1" />
                                         <span style="color:red"><?php echo form_error('jenis[' . $ind . ']'); ?></span>
                                     </div>
-                                </div> -->
-                                <div class="col-xs-3">
-                                <div class="form-group has-feedback">
-                                <select step="any" class="form-control" name="jenis[<?php echo $ind ?>]">
-                                <option> Pilih Jenis</option>
-                                    <option value="0">Busuk</option>
-                                    <option value="1">Spek</option>
-                                     <option value="3">Retak</option>
-                                     </select>
-                                     </div>
                                 </div>
+                                
                             </div>
                         </div>
                     </div>
