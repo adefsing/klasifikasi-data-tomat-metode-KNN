@@ -36,7 +36,7 @@ class M_data_latih extends CI_Model
         
         
           } 
-          
+
     public function update($data_latih, $data_latih_param)
     {
         return  $this->db->update('data_latih', $data_latih, $data_latih_param);
@@ -44,6 +44,11 @@ class M_data_latih extends CI_Model
     public function delete($data_latih_param)
     {
         return $this->db->delete("data_latih", $data_latih_param);
+    }
+
+    function hapus_data(){
+        $this->db->empty_table('data_latih');
+        $this->db->empty_table('data_latih_normalized');
     }
     public function count()
     {

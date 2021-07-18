@@ -41,6 +41,7 @@
         <br>
         <a href="<?php echo site_url('admin/data_testing/create'); ?>" class="btn-sm btn-primary">Tambah Data</a>
         <a href="<?php echo site_url('admin/data_testing/import'); ?>" class="btn-sm btn-success">Import Data</a>
+        <a href="<?php echo site_url('admin/data_testing/hapusall'); ?>" class="btn-sm btn-danger">Kosongkan Data</a>
       </div>
       <!-- /.box-header -->
       <div class="box-body">

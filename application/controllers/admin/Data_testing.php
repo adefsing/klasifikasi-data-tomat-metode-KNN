@@ -364,4 +364,9 @@ class Data_testing extends Admin_Controller
         ));
         redirect(site_url('admin/data_testing'));
     }
+
+    function hapusall(){
+		$this->m_data_latih->hapus_data();
+		redirect(site_url('admin/data_uji'));
+	}
 }
