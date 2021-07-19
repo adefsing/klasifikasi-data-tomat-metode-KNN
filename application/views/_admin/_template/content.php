@@ -20,14 +20,14 @@
       <!-- small box -->
       <div class="small-box bg-yellow">
         <div class="inner">
-          <h3><?php echo $data_testing_count ?></h3>
+          <h3><?php echo $data_latih_count ?></h3>
 
-          <p>Data Testing</p>
+          <p>Data Latih</p>
         </div>
         <div class="icon">
           <i class="ion ion-person"></i>
         </div>
-        <a href="<?php echo site_url("admin/data_testing") ?>" class="small-box-footer">Lihat <i class="fa fa-arrow-circle-right"></i></a>
+        <a href="<?php echo site_url("admin/data_latih") ?>" class="small-box-footer">Lihat <i class="fa fa-arrow-circle-right"></i></a>
       </div>
     </div>
     <!-- ./col -->

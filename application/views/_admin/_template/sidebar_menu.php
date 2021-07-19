@@ -9,9 +9,9 @@ $menus = array(
   ),
 
   array(
-    'menuId' => "data_testing",
-    'menuName' => "Data Testing",
-    'menuPath' => site_url("admin/data_testing"),
+    'menuId' => "data_latih",
+    'menuName' => "Data Latih",
+    'menuPath' => site_url("admin/data_latih"),
     'menuIcon' => 'fa fa-server'
   ),
 
@@ -25,9 +25,9 @@ $menus = array(
 
 $admin = array(
   'menuId' => "user_management",
-  'menuName' => "Data Uji",
+  'menuName' => "",
   'menuPath' => site_url("admin/user_management"),
-  'menuIcon' => 'fa fa-users'
+  'menuIcon' => ''
 );
 $log = array(
   'menuId' => "log",

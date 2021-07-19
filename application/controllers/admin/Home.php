@@ -30,7 +30,7 @@ class Home extends Admin_Controller
     $log['log_message'] .= "true";
     $this->m_log->inserLog($log);
     //   $data=$this->m_kost->getData( $this->session->userdata('user_id') );
-    $data['data_testing_count'] = $this->m_data_latih->count();
+    $data['data_latih_count'] = $this->m_data_latih->count();
     $data['data_uji_count'] = $this->m_data_uji->count();
     $data['user'] = $this->m_user->getUser($this->session->userdata('user_id'))[0];
     $this->load->view("_admin/_template/header");

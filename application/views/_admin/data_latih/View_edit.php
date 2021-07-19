@@ -19,7 +19,7 @@
         </div>
         <!-- /.box-header -->
         <div class="box-body">
-          <?php echo form_open_multipart('admin/data_testing/updatelatih');?>
+          <?php echo form_open_multipart('admin/data_latih/updatelatih');?>
             <div class="row">
                 <div class="col-xs-12">
                 <?php

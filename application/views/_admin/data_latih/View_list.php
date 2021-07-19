@@ -39,9 +39,9 @@
         <h3 class="box-title"><?php echo $page_name ?></h3>
         <br>
         <br>
-        <a href="<?php echo site_url('admin/data_testing/create'); ?>" class="btn-sm btn-primary">Tambah Data</a>
-        <a href="<?php echo site_url('admin/data_testing/import'); ?>" class="btn-sm btn-success">Import Data</a>
-        <a href="<?php echo site_url('admin/data_testing/hapusall'); ?>" class="btn-sm btn-danger">Kosongkan Data</a>
+        <a href="<?php echo site_url('admin/data_latih/create'); ?>" class="btn-sm btn-primary">Tambah Data</a>
+        <a href="<?php echo site_url('admin/data_latih/import'); ?>" class="btn-sm btn-success">Import Data</a>
+        <a href="<?php echo site_url('admin/data_latih/hapusall'); ?>" class="btn-sm btn-danger">Kosongkan Data</a>
       </div>
       <!-- /.box-header -->
       <div class="box-body">
@@ -111,8 +111,8 @@
                     ?>
                   </td>
                   <td>
-                    <a href="<?php echo site_url('admin/data_testing/editlatih/') . $file->id_latih; ?>" class="btn-sm btn-primary">Edit</a>
-                    <a href="<?php echo site_url('admin/data_testing/delete/') . $file->id_latih; ?>" class="btn-sm btn-danger">Hapus</a>
+                    <a href="<?php echo site_url('admin/data_latih/editlatih/') . $file->id_latih; ?>" class="btn-sm btn-primary">Edit</a>
+                    <a href="<?php echo site_url('admin/data_latih/delete/') . $file->id_latih; ?>" class="btn-sm btn-danger">Hapus</a>
                   </td>
 
                 </tr>
@@ -130,7 +130,7 @@
         <h3 class="box-title">Normalisasi Data</h3>
         <br>
         <br>
-        <a href="<?php echo site_url('admin/data_testing/normalize'); ?>" class="btn-sm btn-primary">Normalisasi Data</a>
+        <a href="<?php echo site_url('admin/data_latih/normalize'); ?>" class="btn-sm btn-primary">Normalisasi Data</a>
 
       </div>
       <!-- /.box-header -->
