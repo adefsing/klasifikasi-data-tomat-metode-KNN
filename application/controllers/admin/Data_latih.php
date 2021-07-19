@@ -2,7 +2,7 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Data_testing extends Admin_Controller
+class Data_latih extends Admin_Controller
 {
 
     public function __construct()
@@ -31,13 +31,13 @@ class Data_testing extends Admin_Controller
         $this->m_log->inserLog($log);
         //   $data=$this->m_kost->getData( $this->session->userdata('user_id') );
         //   $data['files'] = $data;
-        $data['page_name'] = "Data Testing";
+        $data['page_name'] = "Data Latih";
         $data['user'] = $this->m_user->getUser($this->session->userdata('user_id'))[0];
         $data['files'] = $this->m_data_latih->read();
         $data['files_normalized'] = $this->m_data_latih_normalized->read();
         $this->load->view("_admin/_template/header");
         $this->load->view("_admin/_template/sidebar_menu");
-        $this->load->view("_admin/data_testing/View_list", $data);
+        $this->load->view("_admin/data_latih/View_list", $data);
         $this->load->view("_admin/_template/footer");
     }
     
@@ -49,7 +49,7 @@ class Data_testing extends Admin_Controller
         
               $this->load->view("_admin/_template/header");
               $this->load->view("_admin/_template/sidebar_menu");
-                  $this->load->view("_admin/data_testing/View_edit",$data);
+                  $this->load->view("_admin/data_latih/View_edit",$data);
               $this->load->view("_admin/_template/footer"); 
     }
   
@@ -83,7 +83,7 @@ class Data_testing extends Admin_Controller
   
   
         $this->m_data_latih->update_data($where, $data);
-        redirect('admin/data_testing');
+        redirect('admin/data_latih');
     }
 
     public function create()
@@ -107,112 +107,49 @@ class Data_testing extends Admin_Controller
 
 
         if ($this->form_validation->run() == true) {
-            $data_testing = array();
+            $data_latih = array();
             $inpust =  ($this->input->post('area[]') == null) ? array() : $this->input->post('area[]');
             foreach ($inpust as $ind => $val) {
                 $data = array();
                 if (!empty($this->input->post('area')[$ind])) {
-                    $data_test["area"] = $this->input->post('area')[$ind];
-                    $data_test["perimeter"] = $this->input->post('perimeter')[$ind];
-                    $data_test["bentuk"] = $this->input->post('bentuk')[$ind];
-                    $data_test["G0_kontras"] = $this->input->post('G0_kontras')[$ind];
-                    $data_test["G45_kontras"] = $this->input->post('G45_kontras')[$ind];
-                    $data_test["G90_kontras"] = $this->input->post('G90_kontras')[$ind];
-                    $data_test["G135_kontras"] = $this->input->post('G135_kontras')[$ind];
-                    $data_test["jenis"] = $this->input->post('jenis')[$ind];
+                    $data_train["area"] = $this->input->post('area')[$ind];
+                    $data_train["perimeter"] = $this->input->post('perimeter')[$ind];
+                    $data_train["bentuk"] = $this->input->post('bentuk')[$ind];
+                    $data_train["G0_kontras"] = $this->input->post('G0_kontras')[$ind];
+                    $data_train["G45_kontras"] = $this->input->post('G45_kontras')[$ind];
+                    $data_train["G90_kontras"] = $this->input->post('G90_kontras')[$ind];
+                    $data_train["G135_kontras"] = $this->input->post('G135_kontras')[$ind];
+                    $data_train["jenis"] = $this->input->post('jenis')[$ind];
 
-                    array_push($data_testing, $data_test);
+                    array_push($data_latih, $data_train);
                 }
             }
 
             // echo var_dump( $data_testing );
-            if ($this->m_data_latih->create($data_testing)) {
+            if ($this->m_data_latih->create($data_latih)) {
                 $this->session->set_flashdata('info', array(
                     'from' => 1,
                     'message' =>  'item berhasil ditambah'
                 ));
-                redirect(site_url('admin/data_testing'));
+                redirect(site_url('admin/data_latih'));
                 return;
             }
             $this->session->set_flashdata('info', array(
                 'from' => 0,
                 'message' =>  'terjadi kesalahan saat mengirim data'
             ));
-            redirect(site_url('admin/data_testing'));
+            redirect(site_url('admin/data_latih'));
         } else {
             $data['files'] = $this->m_data_latih->read();
             $data['user'] = $this->m_user->getUser($this->session->userdata('user_id'));
             $this->load->view("_admin/_template/header");
             $this->load->view("_admin/_template/sidebar_menu");
-            $this->load->view("_admin/data_testing/View_create", $data);
+            $this->load->view("_admin/data_latih/View_create", $data);
             $this->load->view("_admin/_template/footer");
         }
     }
 
-    public function edit($id_latih = null)
-    {
-        $data['page_name'] = "Edit Data Testing";
-        $inpust =  ($this->input->post('area[]') == null) ? array() : $this->input->post('area[]');
-        // echo var_dump( $inpust );
-        foreach ($inpust as $ind => $val) {
-            if (!empty($this->input->post('area')[$ind])) {
-                $this->form_validation->set_rules('area[' . $ind . ']', 'area', 'trim|required');
-                $this->form_validation->set_rules('perimeter[' . $ind . ']', 'perimeter', 'trim|required');
-                $this->form_validation->set_rules('bentuk[' . $ind . ']', 'bentuk', 'trim|required');
-                $this->form_validation->set_rules('G0_kontras[' . $ind . ']', 'G0_kontras', 'trim|required');
-                $this->form_validation->set_rules('G45_kontras[' . $ind . ']', 'G45_kontras', 'trim|required');
-                $this->form_validation->set_rules('G90_kontras[' . $ind . ']', 'G90_kontras', 'trim|required');
-                $this->form_validation->set_rules('G135_kontras[' . $ind . ']', 'G135_kontras', 'trim|required');
-            }
-        }
 
-
-
-        if ($this->form_validation->run() == true) {
-            $data_testing = array();
-            $inpust =  ($this->input->post('area[]') == null) ? array() : $this->input->post('area[]');
-            foreach ($inpust as $ind => $val) {
-                $data = array();
-                if (!empty($this->input->post('area')[$ind])) {
-                    $data["area"] = $this->input->post('area')[$ind];
-                    $data["perimeter"] = $this->input->post('perimeter')[$ind];
-                    $data["bentuk"] = $this->input->post('bentuk')[$ind];
-                    $data["G0_kontras"] = $this->input->post('G0_kontras')[$ind];
-                    $data["G45_kontras"] = $this->input->post('G45_kontras')[$ind];
-                    $data["G90_kontras"] = $this->input->post('G90_kontras')[$ind];
-                    $data["G135_kontras"] = $this->input->post('G135_kontras')[$ind];
-
-                    // array_push($data_testing, $data) ;
-                }
-            }
-
-            // echo var_dump( $data_testing );
-            $data_param['id_latih'] = $this->input->post('id_latih');
-
-            if ($this->m_data_latih->update($data, $data_param)) {
-                $this->session->set_flashdata('info', array(
-                    'from' => 1,
-                    'message' =>  'item berhasil diubah'
-                ));
-                redirect(site_url('admin/data_testing'));
-                return;
-            }
-            $this->session->set_flashdata('info', array(
-                'from' => 0,
-                'message' =>  'terjadi kesalahan saat mengirim data'
-            ));
-            redirect(site_url('admin/data_testing'));
-        } else {
-            if ($id_latih == null) redirect(site_url('admin/data_testing'));
-
-            $data['files'] = $this->m_data_latih->read($id_latih);
-            $data['user'] = $this->m_user->getUser($this->session->userdata('user_id'));
-            $this->load->view("_admin/_template/header");
-            $this->load->view("_admin/_template/sidebar_menu");
-            $this->load->view("_admin/data_testing/View_edit", $data);
-            $this->load->view("_admin/_template/footer");
-        }
-    }
 
     public function import()
     {
@@ -239,37 +176,37 @@ class Data_testing extends Admin_Controller
             $sheet = $loadexcel->getActiveSheet()->toArray(null, true, true, true);
 
             // Buat sebuah vari
-            $data_testing = array();
+            $data_latih = array();
             $numrow = 1;
             foreach ($sheet as $row) {
                 // Cek $numrow apakah lebih dari 1
                 // Artinya karena baris pertama adalah nama-nama kolom
                 // Jadi dilewat saja, tidak usah diimport
                 if ($numrow > 1 &&  !empty($row['A'])) {
-                    $data_test["id_latih"] = $row['A'];
-                    $data_test["jenis"] = $row['B'];
-                    $data_test["area"] = $row['C'];
-                    $data_test["perimeter"] = $row['D'];
-                    $data_test["bentuk"] = $row['E'];
-                    $data_test["G0_kontras"] = $row['F'];
-                    $data_test["G45_kontras"] = $row['G'];
-                    $data_test["G90_kontras"] = $row['H'];
-                    $data_test["G135_kontras"] = $row['I'];
+                    $data_train["id_latih"] = $row['A'];
+                    $data_train["jenis"] = $row['B'];
+                    $data_train["area"] = $row['C'];
+                    $data_train["perimeter"] = $row['D'];
+                    $data_train["bentuk"] = $row['E'];
+                    $data_train["G0_kontras"] = $row['F'];
+                    $data_train["G45_kontras"] = $row['G'];
+                    $data_train["G90_kontras"] = $row['H'];
+                    $data_train["G135_kontras"] = $row['I'];
 
                     // Kita push (add) array data ke variabel data
-                    array_push($data_testing, $data_test);
+                    array_push($data_latih, $data_train);
                 }
 
                 $numrow++; // Tambah 1 setiap kali looping
             }
 
             // echo var_dump( $data_testing );
-            if ($this->m_data_latih->create($data_testing)) {
+            if ($this->m_data_latih->create($data_latih)) {
                 $this->session->set_flashdata('info', array(
                     'from' => 1,
                     'message' =>  'item berhasil diimport'
                 ));
-                redirect(site_url('admin//data_testing'));
+                redirect(site_url('admin//data_latih'));
                 return;
             }
             $this->session->set_flashdata('info', array(
@@ -281,7 +218,7 @@ class Data_testing extends Admin_Controller
             echo  $this->upload->display_errors();
             $this->load->view("_admin/_template/header");
             $this->load->view("_admin/_template/sidebar_menu");
-            $this->load->view("_admin/data_testing/View_import", $data);
+            $this->load->view("_admin/data_latih/View_import", $data);
             $this->load->view("_admin/_template/footer");
         }
     }
@@ -293,7 +230,7 @@ class Data_testing extends Admin_Controller
         $min_max = $this->m_data_latih->get_min_max();
 
         if (empty($min_max)) {
-            redirect(site_url('admin/data_testing'));
+            redirect(site_url('admin/data_latih'));
             return;
         }
         // echo json_encode( $min_max );
@@ -335,19 +272,19 @@ class Data_testing extends Admin_Controller
                 'from' => 1,
                 'message' =>  'item berhasil di normalisasi'
             ));
-            redirect(site_url('admin/data_testing'));
+            redirect(site_url('admin/data_latih'));
             return;
         }
         $this->session->set_flashdata('info', array(
             'from' => 0,
             'message' =>  'terjadi kesalahan saat mengirim data'
         ));
-        redirect(site_url('admin/data_testing'));
+        redirect(site_url('admin/data_latih'));
     }
 
     public function delete($id_latih = null)
     {
-        if ($id_latih == null) redirect(site_url('admin/data_testing'));
+        if ($id_latih == null) redirect(site_url('admin/data_latih'));
 
         $data_param['id_latih'] = $id_latih;
         if ($this->m_data_latih->delete($data_param)) {
@@ -355,18 +292,18 @@ class Data_testing extends Admin_Controller
                 'from' => 1,
                 'message' =>  'item berhasil diubah'
             ));
-            redirect(site_url('admin/data_testing'));
+            redirect(site_url('admin/data_latih'));
             return;
         }
         $this->session->set_flashdata('info', array(
             'from' => 0,
             'message' =>  'terjadi kesalahan saat mengirim data'
         ));
-        redirect(site_url('admin/data_testing'));
+        redirect(site_url('admin/data_latih'));
     }
 
     function hapusall(){
 		$this->m_data_latih->hapus_data();
-		redirect(site_url('admin/data_uji'));
+		redirect(site_url('admin/data_latih'));
 	}
 }
