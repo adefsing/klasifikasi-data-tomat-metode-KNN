@@ -93,8 +93,9 @@
                                     <td>
                                         <?php echo $file->G135_kontras ?>
                                     </td>
+                                    <td>
                                     <?php echo ($file->jenis == 1) ? "Retak" : (($file->jenis == 0) ? "Busuk" : (($file->jenis == 2) ? "Spek" : "BELUM DI UJI")) ?>
-                                        </td>
+                                        
                                     </td>
                                     
                                 </tr>

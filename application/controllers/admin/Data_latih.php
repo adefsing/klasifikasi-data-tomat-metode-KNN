@@ -146,7 +146,7 @@ class Data_latih extends Admin_Controller
 
     public function import()
     {
-        $data['page_name'] = "import Data Testing";
+        $data['page_name'] = "import Data latih";
         // if( !($_POST) ) redirect(site_url(''));  
 
         $this->load->library('upload'); // Load librari upload

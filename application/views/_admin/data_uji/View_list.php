@@ -63,6 +63,7 @@
                                 <th>G45_kontras</th>
                                 <th>G90_kontras</th>
                                 <th>G135_kontras</th>
+                                <th>Jenis</th>
                                 <th>Aksi</th>
 
                             </tr>
