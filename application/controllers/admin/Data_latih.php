@@ -11,7 +11,6 @@ class Data_latih extends Admin_Controller
         // $this->output->enable_profiler(TRUE);
         $this->load->model("m_login");
         $this->load->model("m_data_latih");
-        $this->load->model("m_data_latih_normalized");
         $this->load->model("m_register");
         $this->load->model("m_admin");
         $this->load->model("m_user");
@@ -20,7 +19,6 @@ class Data_latih extends Admin_Controller
         $this->load->library("pagination");
         $this->load->library('form_validation');
     }
-
 
     public function index()
     {
@@ -34,7 +32,6 @@ class Data_latih extends Admin_Controller
         $data['page_name'] = "Data Latih";
         $data['user'] = $this->m_user->getUser($this->session->userdata('user_id'))[0];
         $data['files'] = $this->m_data_latih->read();
-        $data['files_normalized'] = $this->m_data_latih_normalized->read();
         $this->load->view("_admin/_template/header");
         $this->load->view("_admin/_template/sidebar_menu");
         $this->load->view("_admin/data_latih/View_list", $data);
@@ -45,7 +42,7 @@ class Data_latih extends Admin_Controller
     {
         $where = array('id_latih' => $id_latih);
         $data['latihedit'] = $this->m_data_latih->edit_latih($where, 'data_latih')->result();
-        $data['page_name'] = "Edit Data Testing";
+        $data['page_name'] = "Edit Data latih";
         
               $this->load->view("_admin/_template/header");
               $this->load->view("_admin/_template/sidebar_menu");
@@ -104,8 +101,6 @@ class Data_latih extends Admin_Controller
             }
         }
 
-
-
         if ($this->form_validation->run() == true) {
             $data_latih = array();
             $inpust =  ($this->input->post('area[]') == null) ? array() : $this->input->post('area[]');
@@ -148,8 +143,6 @@ class Data_latih extends Admin_Controller
             $this->load->view("_admin/_template/footer");
         }
     }
-
-
 
     public function import()
     {
@@ -206,7 +199,7 @@ class Data_latih extends Admin_Controller
                     'from' => 1,
                     'message' =>  'item berhasil diimport'
                 ));
-                redirect(site_url('admin//data_latih'));
+                redirect(site_url('admin/data_latih'));
                 return;
             }
             $this->session->set_flashdata('info', array(
@@ -223,65 +216,7 @@ class Data_latih extends Admin_Controller
         }
     }
 
-    public function normalize()
-    {
-        $this->m_data_latih_normalized->clear(); //kosongka normalisasi
-        $files = $this->m_data_latih->read();
-        $min_max = $this->m_data_latih->get_min_max();
-
-        if (empty($min_max)) {
-            redirect(site_url('admin/data_latih'));
-            return;
-        }
-        // echo json_encode( $min_max );
-        // prosedur untuk menormalisasi
-        for ($i = 0; $i < count($files); $i++) {
-            // echo round( $files[ $i ]->G45_kontras,3)."<br>";
-
-            $len = $min_max["max_area"] -  $min_max["min_area"];
-            $files[$i]->area  =  (($files[$i]->area - $min_max["min_area"]) / ($len)) * 1 + 0;
-            $files[$i]->area = round($files[$i]->area, 4);
-
-            $len = $min_max["max_perimeter"] -  $min_max["min_perimeter"];
-            $files[$i]->perimeter  =  (($files[$i]->perimeter - $min_max["min_perimeter"]) / ($len)) * 1 + 0;
-            $files[$i]->perimeter = round($files[$i]->perimeter, 4);
-
-            $len = $min_max["max_bentuk"] -  $min_max["min_bentuk"];
-            $files[$i]->bentuk  =  (($files[$i]->bentuk - $min_max["min_bentuk"]) / ($len)) * 1 + 0;
-            $files[$i]->bentuk = round($files[$i]->bentuk, 4);
-
-            $len = $min_max["max_G0_kontras"] -  $min_max["min_G0_kontras"];
-            $files[$i]->G0_kontras  =  (($files[$i]->G0_kontras - $min_max["min_G0_kontras"]) / ($len)) * 1 + 0;
-            $files[$i]->G0_kontras = round($files[$i]->G0_kontras, 4);
-
-            $len = $min_max["max_G45_kontras"] -  $min_max["min_G45_kontras"];
-            $files[$i]->G45_kontras  =  (($files[$i]->G45_kontras - $min_max["min_G45_kontras"]) / ($len)) * 1 + 0;
-            $files[$i]->G45_kontras = round($files[$i]->G45_kontras, 4);
-
-            $len = $min_max["max_G90_kontras"] -  $min_max["min_G90_kontras"];
-            $files[$i]->G90_kontras  =  (($files[$i]->G90_kontras - $min_max["min_G90_kontras"]) / ($len)) * 1 + 0;
-            $files[$i]->G90_kontras = round($files[$i]->G90_kontras, 4);
-
-            $len = $min_max["max_G135_kontras"] -  $min_max["min_G135_kontras"];
-            $files[$i]->G135_kontras  =  (($files[$i]->G135_kontras - $min_max["min_G135_kontras"]) / ($len)) * 1 + 0;
-            $files[$i]->G135_kontras = round($files[$i]->G135_kontras, 4);
-        }
-
-        if ($this->m_data_latih_normalized->create($files)) {
-            $this->session->set_flashdata('info', array(
-                'from' => 1,
-                'message' =>  'item berhasil di normalisasi'
-            ));
-            redirect(site_url('admin/data_latih'));
-            return;
-        }
-        $this->session->set_flashdata('info', array(
-            'from' => 0,
-            'message' =>  'terjadi kesalahan saat mengirim data'
-        ));
-        redirect(site_url('admin/data_latih'));
-    }
-
+   
     public function delete($id_latih = null)
     {
         if ($id_latih == null) redirect(site_url('admin/data_latih'));
@@ -301,7 +236,7 @@ class Data_latih extends Admin_Controller
         ));
         redirect(site_url('admin/data_latih'));
     }
-
+    
     function hapusall(){
 		$this->m_data_latih->hapus_data();
 		redirect(site_url('admin/data_latih'));

@@ -41,7 +41,7 @@
                 <br>
                 <a href="<?php echo site_url('landing/add_biodata'); ?>" class="btn-sm btn-primary">Tambah Data</a>
                 <a href="<?php echo site_url('admin/data_uji/import'); ?>" class="btn-sm btn-success">Import Data Uji</a>
-                <a href="<?php echo site_url('admin/user_management/delete_all'); ?>" class="btn-sm btn-danger">Kosongkan Data</a>
+                <a href="<?php echo site_url('admin/data_uji/hapus'); ?>" class="btn-sm btn-danger">Kosongkan Data</a>
             </div>
             <!-- /.box-header -->
 

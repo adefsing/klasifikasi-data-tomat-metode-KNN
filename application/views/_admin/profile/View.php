@@ -41,7 +41,7 @@
       <?php if( !empty($user) ): ?>
         <div class="row">
           <div class="col-xs-6"> 
-            <h2><?php echo $user[0]->user_profile_fullname ." ( ".$user[0]->user_username." ) "  ?> </h2>
+            <h2><?php echo $user[0]->user_username ?> </h2>
             <h4> Alamat : <?php echo $user[0]->user_profile_address ?> </h4>
             <h4> <?php echo $user[0]->user_profile_email ?> </h4>
             <h4> <?php echo $user[0]->user_profile_phone ?> </h4>

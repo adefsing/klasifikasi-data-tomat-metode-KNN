@@ -35,6 +35,23 @@ class M_data_uji extends CI_Model
         }
         return $filtered_data;
     }
+
+    public function readuji($id_uji = -1, $mode = "object")
+    {
+        $sql = "
+            SELECT * from data_uji
+        ";
+        if ($id_uji != -1) {
+            $sql .= "
+                where id_uji = '$id_uji'
+            ";
+        }
+        if ($mode == "array")
+            return $query = $this->db->query($sql)->result_array();
+        else
+            return $query = $this->db->query($sql)->result();
+    }
+
     public function read($id_uji = -1)
     {
         $sql = "
@@ -47,34 +64,34 @@ class M_data_uji extends CI_Model
         }
         return $query = $this->db->query($sql)->result();
     }
+
     public function record_count()
     {
         return $this->db->count_all('data_uji');
     }
-    public function read_normalize($id_uji = -1)
-    {
-        $sql = "
-            SELECT a.* from data_uji a
-        ";
-        if ($id_uji != -1) {
-            $sql .= "
-                where a.id_uji = '$id_uji'
-            ";
-        }
-        return $query = $this->db->query($sql)->result();
-    }
+    
     public function update($data_uji, $data_uji_param)
     {
         return  $this->db->update('data_uji', $data_uji, $data_uji_param);
     }
+
+    public function updateall($data_uji, $data_uji_param)
+    {
+        // echo var_dump( $data_uji );return;
+        $data_uji = $this->_filter_data('data_uji', $data_uji);
+        return  $this->db->update('data_uji', $data_uji, $data_uji_param);
+    }
+
     public function _update_batch($data_uji)
     {
         return $this->db->update_batch('data_uji', $data_uji, 'id_uji');
     }
+
     public function delete($data_uji_param)
     {
         return $this->db->delete("data_uji", $data_uji_param);
     }
+
     public function count()
     {
         return $this->db->count_all("data_uji");
@@ -82,6 +99,25 @@ class M_data_uji extends CI_Model
 
     function hapus_data(){
         $this->db->empty_table('data_uji');
-        $this->db->empty_table('data_uji_normalized');
+    }
+
+    public function rangking($id_uji = -1, $mode = "object")
+    {
+        $sql = "
+            SELECT * from data_uji
+            
+        ";
+        if ($id_uji != -1) {
+            $sql .= "
+                where id_uji = '$id_uji'
+                AND jenis != -1
+            ";
+        }
+        
+
+        if ($mode == "array")
+            return $query = $this->db->query($sql)->result_array();
+        else
+            return $query = $this->db->query($sql)->result();
     }
 }

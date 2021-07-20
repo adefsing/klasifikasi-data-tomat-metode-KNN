@@ -10,7 +10,7 @@
 
     array(
       'menuId' => "data_testing",
-      'menuName' => "Data Testing",
+      'menuName' => "Data latih",
       'menuPath' => site_url("admin/data_testing"),
       'menuIcon' => 'fa fa-server'
     ),

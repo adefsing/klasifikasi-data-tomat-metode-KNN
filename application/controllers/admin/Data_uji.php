@@ -12,8 +12,6 @@ class Data_uji extends Admin_Controller
         $this->load->model("m_login");
         $this->load->model("m_data_latih");
         $this->load->model("m_data_uji");
-        $this->load->model("m_data_latih_normalized");
-        $this->load->model("m_data_uji_normalized");
         $this->load->model("m_register");
         $this->load->model("m_admin");
         $this->load->model("m_user");
@@ -35,11 +33,7 @@ class Data_uji extends Admin_Controller
         $data['page_name'] = "Data Uji";
         $data['user'] = $this->m_user->getUser($this->session->userdata('user_id'))[0];
         $data['files'] = $this->m_data_uji->read();
-        $data['files_normalized'] = $this->m_data_uji_normalized->read();
-        $data['data_testing']  = $this->m_data_latih_normalized->read();
-
-        $data['data_uji_count'] = $this->m_data_uji->record_count();
-        $data['data_uji_normalized_count'] = $this->m_data_uji_normalized->record_count();
+        $data['data_latih']  = $this->m_data_latih->read(); 
 
         $this->load->view("_admin/_template/header");
         $this->load->view("_admin/_template/sidebar_menu");
@@ -113,7 +107,7 @@ class Data_uji extends Admin_Controller
 
     public function import()
     {
-        $data['page_name'] = "import Data Peserta";
+        $data['page_name'] = "import Data uji";
         // if( !($_POST) ) redirect(site_url(''));  
 
         $this->load->library('upload'); // Load librari upload
@@ -153,21 +147,8 @@ class Data_uji extends Admin_Controller
                     $data_uji["G90_kontras"] = $row['G'];
                     $data_uji["G135_kontras"] = $row['H'];
 
-                    ##########################################################
-                    // $data_profile["user_profile_fullname"] = $row['A'];
-                    // $data_profile["user_profile_address"] = $row['G'];
-                    // $data_profile["user_profile_email"] = $row['H'];
-                    // $data_profile["user_profile_phone"] = $row['I'];
-                    // //add user
-                    // $identitas = time();
-                    // $data_user['user_username'] = $identitas + $numrow;
-                    // $data_user['user_password'] = md5($identitas);
-                    // $result = $this->m_register->register($data_user, $data_profile);
-                    // if ($result['status']) {
-                    // $data_uji["jenis"] = $result['message']['user_id'];
-                    // Kita push (add) array data ke variabel data
+                    
                     array_push($__data_uji, $data_uji);
-                    // }
                 }
 
                 $numrow++; // Tambah 1 setiap kali looping
@@ -197,82 +178,18 @@ class Data_uji extends Admin_Controller
         }
     }
 
-    public function normalize()
-    {
-        $this->m_data_uji_normalized->clear(); //kosongka normalisasi
-        $files = $this->m_data_uji->read_normalize();
-
-        $min_max = $this->m_data_latih->get_min_max();
-
-        if (empty($min_max) || empty($files)) {
-            redirect(site_url('admin/data_uji'));
-            return;
-        }
-        // echo json_encode( $min_max );
-        // prosedur untuk menormalisasi
-        for ($i = 0; $i < count($files); $i++) {
-            // echo round( $files[ $i ]->G0_kontras,3)."<br>";
-            $len = $min_max["max_area"] -  $min_max["min_area"];
-            $files[$i]->area  =  (($files[$i]->area - $min_max["min_area"]) / ($len)) * 1 + 0;
-            $files[$i]->area = round($files[$i]->area, 4);
-
-            $len = $min_max["max_perimeter"] -  $min_max["min_perimeter"];
-            $files[$i]->perimeter  =  (($files[$i]->perimeter - $min_max["min_perimeter"]) / ($len)) * 1 + 0;
-            $files[$i]->perimeter = round($files[$i]->perimeter, 4);
-
-            $len = $min_max["max_area"] -  $min_max["min_area"];
-            $files[$i]->area  =  (($files[$i]->area - $min_max["min_area"]) / ($len)) * 1 + 0;
-            $files[$i]->area = round($files[$i]->area, 4);
-
-            $len = $min_max["max_bentuk"] -  $min_max["min_bentuk"];
-            $files[$i]->bentuk  =  (($files[$i]->bentuk - $min_max["min_bentuk"]) / ($len)) * 1 + 0;
-            $files[$i]->bentuk = round($files[$i]->bentuk, 4);
-
-            $len = $min_max["max_G0_kontras"] -  $min_max["min_G0_kontras"];
-            $files[$i]->G0_kontras  =  (($files[$i]->G0_kontras - $min_max["min_G0_kontras"]) / ($len)) * 1 + 0;
-            $files[$i]->G0_kontras = round($files[$i]->G0_kontras, 4);
-
-            $len = $min_max["max_G45_kontras"] -  $min_max["min_G45_kontras"];
-            $files[$i]->G45_kontras  =  (($files[$i]->G45_kontras - $min_max["min_G45_kontras"]) / ($len)) * 1 + 0;
-            $files[$i]->G45_kontras = round($files[$i]->G45_kontras, 4);
-
-            $len = $min_max["max_G90_kontras"] -  $min_max["min_G90_kontras"];
-            $files[$i]->G90_kontras  =  (($files[$i]->G90_kontras - $min_max["min_G90_kontras"]) / ($len)) * 1 + 0;
-            $files[$i]->G90_kontras = round($files[$i]->G90_kontras, 4);
-
-            $len = $min_max["max_G135_kontras"] -  $min_max["min_G135_kontras"];
-            $files[$i]->G135_kontras  =  (($files[$i]->G135_kontras - $min_max["min_G135_kontras"]) / ($len)) * 1 + 0;
-            $files[$i]->G135_kontras = round($files[$i]->G135_kontras, 4);
-        }
-
-        if ($this->m_data_uji_normalized->create($files)) {
-            $this->session->set_flashdata('info', array(
-                'from' => 1,
-                'message' =>  'item berhasil di normalisasi'
-            ));
-            redirect(site_url('admin/data_uji'));
-            return;
-        }
-        $this->session->set_flashdata('info', array(
-            'from' => 0,
-            'message' =>  'terjadi kesalahan saat mengirim data'
-        ));
-        redirect(site_url('admin/data_uji'));
-    }
 
     public function uji()
     {
         if (!($_POST)) redirect(site_url('admin/data_uji'));
 
         $id_uji = $this->input->post('id_uji');
-        // $data_uji = $this->m_data_uji_normalized->read_single_table( $id_uji , "array" );
-        $data_uji = $this->m_data_uji_normalized->read($id_uji, "array");
-        $data_testing = $this->m_data_latih_normalized->read(-1, "array");
+        $data_uji = $this->m_data_uji->readuji($id_uji, "array");
+        $data_latih = $this->m_data_latih->readuji(-1, "array");
 
-        $min_max = $this->m_data_latih->get_min_max();
-        // echo json_encode( $data_uji ).'<br>' ;
-        // return;
-        if (empty($data_uji) || empty($data_testing)) {
+        
+        
+        if (empty($data_uji) || empty($data_latih)) {
             redirect(site_url('admin/data_uji'));
             return;
         }
@@ -285,10 +202,10 @@ class Data_uji extends Admin_Controller
         //prosedur mencari tetangga terdekat
         for ($i = 0; $i < count($data_uji); $i++) {
             $DISTANCES = array();
-            for ($j = 0; $j < count($data_testing); $j++) {
-                $dist['distance'] = $this->distance($data_uji[$i], $data_testing[$j]);
-                $dist['jenis'] = $data_testing[$j]['jenis'];
-                $dist['id_uji'] = $data_testing[$j]['id_latih'];
+            for ($j = 0; $j < count($data_latih); $j++) {
+                $dist['distance'] = $this->distance($data_uji[$i], $data_latih[$j]);
+                $dist['jenis'] = $data_latih[$j]['jenis'];
+                $dist['id_uji'] = $data_latih[$j]['id_latih'];
 
                 array_push($DISTANCES, $dist);
             }
@@ -312,7 +229,7 @@ class Data_uji extends Admin_Controller
                 }
             }
 
-            $data_uji[$i]['jenis'] = $terbesar[0]['jenis']; //update nilai label (lulus / tidak lulus)
+            $data_uji[$i]['jenis'] = $terbesar[0]['jenis'];
         }
 
 
@@ -326,12 +243,11 @@ class Data_uji extends Admin_Controller
         //ubah ke array object
         foreach ($data["data_uji"]  as  $ind => $val) {
             $data["data_uji"][$ind] = (object) $data_uji[$ind];
-            unset($data_uji[$ind]['user_profile_fullname']);
         }
         // echo json_encode( $data_uji ).'<br>' ;
 
         // update data uji
-        $this->m_data_uji_normalized->_update_batch($data_uji);
+        $this->m_data_uji->_update_batch($data_uji);
 
         $data['page_name'] = "Hasil Data Uji";
         $this->load->view("_admin/_template/header");
@@ -341,32 +257,24 @@ class Data_uji extends Admin_Controller
     }
 
 
-
     public function uji_batch_2()
     {
         if (!($_POST)) redirect(site_url('admin/data_uji'));
+        
+        $data_uji = $this->m_data_uji->readuji(-1, "array");
+        $data_latih = $this->m_data_latih->readuji(-1, "array");
 
-        // $data_uji = $this->m_data_uji_normalized->read_single_table( -1, "array" );
-        $data_uji = $this->m_data_uji_normalized->read(-1, "array");
-        $data_testing = $this->m_data_latih_normalized->read(-1, "array");
-
-        $min_max = $this->m_data_latih->get_min_max();
-        // echo json_encode( $data_testing ).'<br>' ;
-        // return;
-
-        if (empty($data_uji) || empty($data_testing)) {
+        if (empty($data_uji) || empty($data_latih)) {
             redirect(site_url('admin/data_uji'));
             return;
         }
-        // echo json_encode( $data_testing );
-
 
         for ($i = 0; $i < count($data_uji); $i++) {
             $DISTANCES = array();
-            for ($j = 0; $j < count($data_testing); $j++) {
-                $dist['distances'] = $this->distance($data_uji[$i], $data_testing[$j]);
-                $dist['jenis'] = $data_testing[$j]['jenis'];
-                $dist['id_uji'] = $data_testing[$j]['id_latih'];
+            for ($j = 0; $j < count($data_latih); $j++) {
+                $dist['distances'] = $this->distance($data_uji[$i], $data_latih[$j]);
+                $dist['jenis'] = $data_latih[$j]['jenis'];
+                $dist['id_uji'] = $data_latih[$j]['id_latih'];
                 // echo json_encode( $dist ).'<br>' ;
 
                 array_push($DISTANCES, $dist);
@@ -391,29 +299,18 @@ class Data_uji extends Admin_Controller
                     $terbesar = $NEIGHBOUR[$paramName];
                 }
             }
-            // $lulus = ($NEIGHBOUR[1])  ? count($NEIGHBOUR[1])  : 0;
-            $sum = 0;
-            $count = count($NEIGHBOUR[1]);
-
-            foreach ($NEIGHBOUR[1] as $_length) {
-                $sum += $_length['distances'];
-            }
-
-            $avrg = $sum / $count; // perhitungan nilai jarak rata-rata
-            $data_uji[$i]['jenis']        = $terbesar[0]['jenis']; //update nilai label (lulus / tidak lulus)
-            $data_uji[$i]['tetangga_terdekat'] = $avrg;
+            
+            $data_uji[$i]['jenis']        = $terbesar[0]['jenis']; 
             $data_uji[$i]['K_VALUE']           = $K_VALUE;
             $data_uji[$i]['distances']         = $DISTANCES;
             $data_uji[$i]['NEIGHBOURS']        = $NEIGHBOUR;
 
             $data_uji_param['id_uji'] = $data_uji[$i]['id_uji'];
-            $this->m_data_uji_normalized->update($data_uji[$i], $data_uji_param);
+            $this->m_data_uji->updateall($data_uji[$i], $data_uji_param);
         }
 
-        $data['data_uji'] = $data_uji;
-
-        $data['files']  = $this->m_data_uji_normalized->rangking();
-        // $data['data_uji'] = $data_uji;
+    
+        $data['files']  = $this->m_data_uji->rangking();
         $data['page_name'] = "Hasil Data Uji";
         $this->load->view("_admin/_template/header");
         $this->load->view("_admin/_template/sidebar_menu");
@@ -421,13 +318,14 @@ class Data_uji extends Admin_Controller
         $this->load->view("_admin/_template/footer");
     }
 
+   
     function hapus(){
 		$this->m_data_uji->hapus_data();
 		redirect(site_url('admin/data_uji'));
 	}
 
     //   fungsi untuk menghitung jarak
-    private function distance($data_uji, $data_testing)
+    private function distance($data_uji, $data_latih)
     {
         $attrs = array(
             'area', 'perimeter', 'bentuk', 'G0_kontras',
@@ -435,12 +333,10 @@ class Data_uji extends Admin_Controller
         );
         $value = 0;
         foreach ($attrs as $attr) {
-            $value += pow(($data_uji[$attr] - $data_testing[$attr]), 2);
+            $value += pow(($data_latih[$attr] - $data_uji[$attr]), 2);
         }
-        return round(sqrt($value), 6);
+        
+         return round(sqrt($value), 6);
     }
-
-
-
 
 }

@@ -125,17 +125,8 @@
                                             <?php echo $file->distance ?>
                                         </td>
                                         <td>
-                                            <?php
-                                            if ($file->jenis == 0) {
-                                                echo "Busuk";
-                                            } elseif ($file->jenis == 1) {
-                                                echo "Retak";
-                                            } elseif ($file->jenis == 2) {
-                                                echo "Spek";
-                                            } else {
-                                                echo "BELUM DIUJI";
-                                            }
-                                            ?>
+                                        <?php echo ($file->jenis == 1) ? "Retak" : (($file->jenis == 0) ? "Busuk" : (($file->jenis == 2) ? "Spek" : "BELUM DI UJI")) ?>
+                                            </td>
                                         </td>
                                     </tr>
                                 <?php
@@ -208,18 +199,8 @@
                                         <?php echo $file->G135_kontras ?>
                                     </td>
                                     <td>
-                                        <!-- $file->data_label == 1) ? "LULUS" : (($file->data_label == 0) ? "TIDAK LULUS" : "BELUM DI UJI") -->
-                                        <?php
-                                        if ($file->jenis == 0) {
-                                            echo "Busuk";
-                                        } elseif ($file->jenis == 1) {
-                                            echo "Retak";
-                                        } elseif ($file->jenis == 2) {
-                                            echo "Spek";
-                                        } else {
-                                            echo "BELUM DIUJI";
-                                        }
-                                        ?>
+                                    <?php echo ($file->jenis == 1) ? "Retak" : (($file->jenis == 0) ? "Busuk" : (($file->jenis == 2) ? "Spek" : "BELUM DI UJI")) ?>
+                                         </td>
                                     </td>
                                 </tr>
                             <?php

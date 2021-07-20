@@ -37,11 +37,5 @@ class M_admin extends CI_Model
         ));
     }
 
-    public function deleteUser($data_user_param)
-    {
-        $this->db->delete("data_uji", $data_user_param);
-        $this->db->delete("data_uji_normalized", $data_user_param);
-        $this->db->delete("user_profile", $data_user_param);
-        return $this->db->delete("user", $data_user_param);
-    }
+    
 }
