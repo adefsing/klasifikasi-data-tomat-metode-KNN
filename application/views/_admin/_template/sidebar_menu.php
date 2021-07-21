@@ -65,8 +65,9 @@ if ($this->session->userdata('user_level') == 1) {
         <?php endif; ?>
       </div>
       <div class="pull-left info">
-        <?php echo $this->session->userdata('user_profile_fullname') ?>
+        Username &nbsp;&nbsp;&nbsp;[<?php echo $this->session->userdata('user_profile_fullname') ?>]
       </div>
+      <br>
     </div>
     <!-- /.search form -->
     <!-- sidebar menu: : style can be found in sidebar.less -->
